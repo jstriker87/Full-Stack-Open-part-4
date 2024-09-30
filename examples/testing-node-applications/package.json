@@ -1,0 +1,26 @@
+{
+  "name": "full-stack-open-part-4",
+  "version": "1.0.0",
+  "main": "app.js",
+  "directories": {
+    "example": "examples"
+  },
+  "scripts": {
+    "test": "node --test",
+    "dev": "nodemon index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.0",
+    "mongoose": "^8.7.0"
+  },
+  "devDependencies": {
+    "install": "^0.13.0",
+    "nodemon": "^3.1.7",
+    "npm": "^10.8.3"
+  }
+}
