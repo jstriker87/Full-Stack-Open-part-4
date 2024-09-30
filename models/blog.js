@@ -1,16 +1,26 @@
 const mongoose = require('mongoose')
 
 const blogSchema = new mongoose.Schema({
-  name: {
+  title: {
     type: String,
     required: true,
     minlength: 5
   },
+  author: {
+    type: String,
+    required: true,
+    minlength: 5
+  },
+
   url: {
     type: String,
     required: true,
     minlength: 5
   },
+  likes: {
+    type: Number,
+    required: true,
+  }
 })
 
 blogSchema.set('toJSON', {
@@ -21,4 +31,4 @@ blogSchema.set('toJSON', {
   }
 })
 
-module.exports = mongoose.model('Note', blogSchema)
+module.exports = mongoose.model('Blog', blogSchema)
