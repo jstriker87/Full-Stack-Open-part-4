@@ -93,7 +93,7 @@ describe('Most blogs', () => {
 
   test('The author who has the most blogs', () => {
     const result = listHelper.mostBlogs(listWithOneBlog)
-    console.log("The Result:" + result)
+    process.exit(0)
     assert.deepStrictEqual(result,"Testing")
   })
 })

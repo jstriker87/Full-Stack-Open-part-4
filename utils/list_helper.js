@@ -28,12 +28,17 @@ const mostBlogs = (blogs) => {
         : (accumulator[current.author] = 1)
     return accumulator
     },{})
-    console.log(result)
-    return Object.keys(result).reduce(
-        (prev, current) => {
-            return prev > current ? prev : current;
-        }
-    );
+
+    const values = Object.values(result);
+    let maxValue = null
+    values.map((el) => {
+        console.log(el)
+        const valueFromObject = el.value;
+        maxValue = Math.max(maxValue, valueFromObject);
+        console.log(maxValue)
+    });
+    return maxValue
+    return Math.max(...result.values())
 }
 
 module.exports = {
