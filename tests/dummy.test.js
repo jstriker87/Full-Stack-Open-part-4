@@ -37,7 +37,7 @@ describe('Total likes', () => {
 })
 
 describe('Likes', () => {
-  const listWithOneBlog = [
+  const list = [
     {
       _id: '5a422aa71b54a676234d17f8',
       title: 'Go To Statement Considered Harmful',
@@ -57,13 +57,13 @@ describe('Likes', () => {
   ]
 
   test('Blogs with the most likes', () => {
-    const result = listHelper.mostLikes(listWithOneBlog)
-   // assert.deepStrictEqual(result,listWithOneBlog[0])
+    const result = listHelper.mostLikes(list)
+    assert.deepStrictEqual(result,list[0])
   })
 })
 
 describe('Most blogs', () => {
-  const listWithOneBlog = [
+  const lists = [
     {
       _id: '5a422aa71b54a676234d17f8',
       title: 'Go To Statement Considered Harmful',
@@ -92,8 +92,8 @@ describe('Most blogs', () => {
   ]
 
   test('The author who has the most blogs', () => {
-    const result = listHelper.mostBlogs(listWithOneBlog)
-    assert.deepStrictEqual(result,listWithOneBlog[0].author)
+    const result = listHelper.mostBlogs(lists)
+    assert.deepStrictEqual(result,lists[0].author)
   })
 })
 
