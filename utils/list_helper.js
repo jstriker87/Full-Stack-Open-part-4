@@ -29,16 +29,14 @@ const mostBlogs = (blogs) => {
     return accumulator
     },{})
 
-    const values = Object.values(result);
+    const values = Object.entries(result);
     let maxValue = null
-    values.map((el) => {
-        console.log(el)
-        const valueFromObject = el.value;
-        maxValue = Math.max(maxValue, valueFromObject);
-        console.log(maxValue)
+    values.map((el,_) => {
+        maxValue = Math.max(maxValue,el[1]);
     });
-    return maxValue
-    return Math.max(...result.values())
+    const indexval = values.findIndex(([_, value]) => value === maxValue);
+    const finalResult = values[indexval]
+    return finalResult[0]
 }
 
 module.exports = {
