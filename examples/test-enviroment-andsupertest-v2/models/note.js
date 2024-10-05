@@ -1,19 +1,15 @@
 const mongoose = require('mongoose')
 
-const blogSchema = new mongoose.Schema({
-  name: {
+const noteSchema = new mongoose.Schema({
+  content: {
     type: String,
     required: true,
     minlength: 5
   },
-  url: {
-    type: String,
-    required: true,
-    minlength: 5
-  },
+  important: Boolean,
 })
 
-blogSchema.set('toJSON', {
+noteSchema.set('toJSON', {
   transform: (document, returnedObject) => {
     returnedObject.id = returnedObject._id.toString()
     delete returnedObject._id
@@ -21,4 +17,4 @@ blogSchema.set('toJSON', {
   }
 })
 
-module.exports = mongoose.model('Note', blogSchema)
+module.exports = mongoose.model('Note', noteSchema)
