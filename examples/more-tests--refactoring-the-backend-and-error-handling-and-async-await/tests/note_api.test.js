@@ -17,6 +17,7 @@ test('notes are returned as json', async () => {
 
 test('there are two notes', async () => {
   const response = await api.get('/api/notes')
+  console.log(typeof(response))
   assert.strictEqual(response.body.length, helper.initialNotes.length)
 })
 
