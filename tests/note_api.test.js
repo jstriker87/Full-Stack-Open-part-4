@@ -121,6 +121,21 @@ test('A non valid blog missing url cant be added ', async () => {
 })
 
 
+test('a blog can be deleted', async () => {
+  const blogsAtStart = await helper.blogsInDb()
+  const blogToDelete = blogsAtStart[0]
+
+  await api
+    .delete(`/api/blogs/${blogToDelete.id}`)
+    .expect(204)
+
+  const blogsAtEnd = await helper.blogsInDb()
+  console.log(blogsAtEnd)
+  const contents = blogsAtEnd.map(r => r.content)
+
+  //assert(!contents.includes(blogToDelete.content))
+
+})
 
 after(async () => {
   await mongoose.connection.close()
