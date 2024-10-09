@@ -2,13 +2,15 @@ const Blog = require('../models/blog')
 
 const initialBlogs = [
   {
-    name: 'Test blog 1',
+    title: 'Test blog 1',
     author: "Test Person 1",
+    url:"www.test1.com",
     likes: 1
   },
   {
-    name: 'Test blog 2',
+    title: 'Test blog 2',
     author: "Test Person 2",
+    url:"www.test2.com",
     likes: 5
   },
 
@@ -23,7 +25,7 @@ const nonExistingId = async () => {
 }
 
 const blogsInDb = async () => {
-  const blogs = await Note.find({})
+  const blogs = await Blog.find({})
   return blogs.map(blog => blog.toJSON())
 }
 
