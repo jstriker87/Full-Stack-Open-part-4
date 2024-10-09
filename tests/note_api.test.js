@@ -62,6 +62,66 @@ test('a valid blog can be added ', async () => {
   assert(contents.includes('Number 3'))
 })
 
+test('a blog can be added wihtout likes being set and it defaults likes to 0', async () => {
+  const newBlog = {
+    title:"Number 3",
+    author: "Author 3",
+    url:"www.person3.com",
+  }
+
+
+    const result = await api
+    .post('/api/blogs')
+    .send(newBlog)
+    .expect(201)
+    .expect('Content-Type', /application\/json/)
+    
+const blogsAtEnd = await helper.blogsInDb()
+
+ blogsAtEnd.forEach(post => {
+    if(post.id  == result.body.id){
+        assert.strictEqual(result.body.likes,0)
+    
+    }
+ });
+})
+
+test('A non valid blog missing title cant be added ', async () => {
+  const newBlog = {
+    author: "Author 3",
+    url:"www.person3.com",
+    likes: 2
+  }
+
+  let result = await api
+    .post('/api/blogs')
+    .send(newBlog)
+    .expect(400)
+    .expect('Content-Type', /application\/json/)
+
+  assert(result.statusCode,400)
+
+})
+
+test('A non valid blog missing url cant be added ', async () => {
+  const newBlog = {
+    title: "Title 3",
+    author: "Author 3",
+    likes: 2
+  }
+
+  let result = await api
+    .post('/api/blogs')
+    .send(newBlog)
+    .expect(400)
+    .expect('Content-Type', /application\/json/)
+
+  assert(result.statusCode,400)
+
+})
+
+
+
 after(async () => {
   await mongoose.connection.close()
 })
