@@ -120,7 +120,6 @@ test('A non valid blog missing url cant be added ', async () => {
 
 })
 
-
 test('a blog can be deleted', async () => {
   const blogsAtStart = await helper.blogsInDb()
   const blogToDelete = blogsAtStart[0]
@@ -130,12 +129,41 @@ test('a blog can be deleted', async () => {
     .expect(204)
 
   const blogsAtEnd = await helper.blogsInDb()
-  console.log(blogsAtEnd)
-  const contents = blogsAtEnd.map(r => r.content)
+  const contents = blogsAtEnd.map(r => r.id)
 
-  //assert(!contents.includes(blogToDelete.content))
+  assert(!contents.includes(blogToDelete.content))
 
 })
+
+test('a valid blog can be updated', async () => {
+  const updatedBlogLikes = {
+    likes: 44
+  }
+  const blogsAtStart = await helper.blogsInDb()
+  const blogToUpdate = blogsAtStart[0]
+ 
+  await api
+    .put(`/api/blogs/${blogToUpdate.id}`)
+    .send(updatedBlogLikes)
+    .expect(200)
+    .expect('Content-Type', /application\/json/)
+
+
+  const blogsAtEnd = await helper.blogsInDb()
+
+  blogsAtEnd.forEach(post => {
+    if(post.id  == blogToUpdate.id){
+        assert.strictEqual(post.likes,updatedBlogLikes.likes)
+    
+    }
+ });
+
+
+
+})
+
+
+
 
 after(async () => {
   await mongoose.connection.close()
