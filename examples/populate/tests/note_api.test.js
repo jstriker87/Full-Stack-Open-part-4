@@ -54,22 +54,11 @@ test('the first note is about HTTP methods', async () => {
 })
 
 describe('addition of a new note', () => {
-    const userId = null
-    beforeEach(async () => {
-    await User.deleteMany({})
-    const passwordHash = await bcrypt.hash('sekret', 10)
-    const user = new User({ username: 'root', passwordHash })
-    await user.save()
-    const usernames = usersAtEnd.map(u => u.username)
-
-  })
-
 
 test('a valid note can be added ', async () => {
   const newNote = {
     content: 'async/await simplifies making async calls',
     important: true,
-    userId: '670d98cfb249db74ed17f14c'
   }
 
   await api
