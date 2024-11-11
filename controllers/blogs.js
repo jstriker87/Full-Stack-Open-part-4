@@ -28,10 +28,10 @@ blogsRouter.post("/", async (request, response, next) => {
     author: body.author,
     url: body.url,
     likes: body.likes || 0,
-    user: body.id,
+    user: user.id,
   });
+
   const savedBlog = await blog.save();
-  console.log("SAVE" + savedBlog);
   user.blogs = user.blogs.concat(savedBlog._id);
   await user.save();
   response.status(201).json(savedBlog);
