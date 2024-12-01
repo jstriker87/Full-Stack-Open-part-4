@@ -39,15 +39,16 @@ const errorHandler = (error, request, response, next) => {
   next(error);
 };
 
-const tokenExtractor = (request, response, next) => {
-  const authorization = request.get("authorization");
-  console.log(authorization);
-
-  const decodedToken = jwt.verify(getTokenFrom(request), process.env.SECRET);
-  if (!decodedToken.id) {
-    return response.status(401).json({ error: "token invalid" });
-  }
-  request.token = decodedToken;
+const getTokenFrom = (request, response, next) => {
+  try {
+    let token = request.header("Authorization");
+    const authorization = request.get("authorization");
+    const decodedToken = jwt.verify(getTokenFrom(request), process.env.SECRET);
+    if (!decodedToken.id) {
+      return response.status(401).json({ error: "token invalid" });
+    }
+    request.token = decodedToken;
+  } catch (err) {}
   next();
 };
 
@@ -55,5 +56,5 @@ module.exports = {
   requestLogger,
   unknownEndpoint,
   errorHandler,
-  tokenExtractor,
+  getTokenFrom,
 };
