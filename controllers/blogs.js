@@ -48,7 +48,12 @@ blogsRouter.post("/", async (request, response, next) => {
 });
 
 blogsRouter.delete("/:id", async (request, response, next) => {
-  await Blog.findByIdAndDelete(request.params.id);
+  const blog = await Blog.findById(request.params.id);
+  const user = request.body.user;
+  if (blog.user.toString() === user.toString()) {
+    const decodedToken = jwt.verify(getTokenFrom(request), process.env.SECRET);
+    await Blog.findByIdAndDelete(request.params.id);
+  }
   response.status(204).end();
 });
 
