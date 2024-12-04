@@ -39,22 +39,31 @@ const errorHandler = (error, request, response, next) => {
   next(error);
 };
 
-const getTokenFrom = (request, response, next) => {
-  try {
-    let token = request.header("Authorization");
-    const authorization = request.get("authorization");
-    const decodedToken = jwt.verify(getTokenFrom(request), process.env.SECRET);
-    if (!decodedToken.id) {
-      return response.status(401).json({ error: "token invalid" });
-    }
-    request.token = decodedToken;
-  } catch (err) {}
-  next();
+const tokenExtractor = (request, response, next) => {
+  const token = request.get("authorization");
+
+  if (token && token.startsWith("Bearer ")) {
+    request.token = token.replace("Bearer ", "");
+    console.log(request.token);
+    return next();
+  }
+  request.token = null;
+  return next();
 };
+
+//const userExtractor = (request, response, next) => {
+//  console.log("BEEF");
+//  const decodedToken = jwt.verify(getTokenFrom(request), process.env.SECRET);
+//  // Get decoded token
+//  // id decoded token ID is empty then return null
+//  // if Ok then find the user by the decoded token ID
+//  next();
+//};
 
 module.exports = {
   requestLogger,
   unknownEndpoint,
   errorHandler,
-  getTokenFrom,
+  tokenExtractor,
+  //userExtractor,
 };
