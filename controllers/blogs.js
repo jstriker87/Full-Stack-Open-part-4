@@ -23,8 +23,6 @@ blogsRouter.get("/:id", async (request, response, next) => {
 
 blogsRouter.post("/", async (request, response, next) => {
   const body = request.body;
-  console.log(request.token);
-  return;
   const decodedToken = jwt.verify(request.token, process.env.SECRET);
   const user = await User.findById(decodedToken.id);
   const blog = new Blog({
