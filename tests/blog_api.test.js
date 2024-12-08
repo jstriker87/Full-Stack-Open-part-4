@@ -90,7 +90,6 @@ test("a valid blog can be added ", async () => {
 
   assert(contents.includes("Number 3"));
 });
-//
 test("a blog can be added without likes being set and it defaults likes to 0", async () => {
   const newBlog = {
     title: "Number 3",
@@ -152,9 +151,21 @@ test("A non valid blog missing url cant be added ", async () => {
 test("a blog can be deleted", async () => {
   const blogsAtStart = await helper.blogsInDb();
   const blogToDelete = blogsAtStart[0];
+  const loginUser = { username: "root", password: "sekret" };
 
-  await api.delete(`/api/blogs/${blogToDelete.id}`).expect(204);
+  const blogData = {
+    user: "Number 3",
+  };
+  loginResult = await api.post("/api/login").send(loginUser);
+  headers = {
+    Authorization: `Bearer ${loginResult.body.token}`,
+  };
 
+  await api
+    .delete(`/api/blogs/${blogToDelete.id}`)
+    .send(blogData)
+    .expect(204)
+    .set(headers);
   const blogsAtEnd = await helper.blogsInDb();
   const contents = blogsAtEnd.map((r) => r.id);
 
