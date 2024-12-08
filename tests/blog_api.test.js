@@ -90,6 +90,25 @@ test("a valid blog can be added ", async () => {
 
   assert(contents.includes("Number 3"));
 });
+
+test("a non valid blog cant be added ", async () => {
+  const newBlog = {
+    title: "Number 3",
+    author: "Auhor 3",
+    url: "www.person3.com",
+    likes: 2,
+    userId: userId,
+  };
+
+  let result = await api
+    .post("/api/blogs")
+    .send(newBlog)
+    .expect(401)
+    .expect("Content-Type", /application\/json/);
+
+  assert(result.statusCode, 401);
+});
+
 test("a blog can be added without likes being set and it defaults likes to 0", async () => {
   const newBlog = {
     title: "Number 3",
